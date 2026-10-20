@@ -327,7 +327,7 @@ Templates (`templates/<id>/`):
 | `proposal` | Situation, approach, team, fees, and next steps |
 | `blank` | A title, one part, two slides, and a close |
 
-Colors: Navy, Dark, Minimal, Forest, Teal, or Plum, with serif or sans serif titles.
+Colors: LBMC (the default: LBMC Tahoe blue, navy, and Instrument Sans), Navy, Dark, Minimal, Forest, Teal, or Plum, with serif or sans serif titles.
 They're written into the deck as one `<style id="deck-theme">` block, so you can restyle
 the whole deck in one place. Upload a logo and it goes in the corner of every slide.
 

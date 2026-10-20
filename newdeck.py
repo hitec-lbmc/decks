@@ -65,6 +65,70 @@ THEMES = {
                       '--paper': '#F4F6F9', '--light': '#EEF1F5', '--title-red': '#1F3A5F', '--accent': '#2E6DA4', '--lime': '#3B82C4', '--line': '#D3DAE3', '--text-light': '#5B6675'},
              'div': {'--div-accent': '#8DB5DD'},
              'pp': _pp('#2E6DA4', '#1F3A5F', '#E3ECF6', '#8DB5DD', '#1B2A3E', '#C6CFDA', '#4F5B6B', '#7D8896', '#F1F4F8', '#DDE3EA')},
+    # LBMC: the LBMC Tahoe palette (LBMC Blue #009ADD, cool grays) in the look of the Digital Steering Committee deck:
+    # charcoal #1E2831 for dark slides, light titles under a small blue eyebrow, grey panels, a quiet footer, no logo on
+    # content slides. Instrument Sans by the user's choice (Tahoe says Geist). Text blue is #0078AD: #009ADD is too
+    # light for small text on white, so it is kept for fills and for text on charcoal.
+    'lbmc': {'name': 'LBMC', 'accent': '#009ADD', 'footer': True,
+             'fonts': 'https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap',
+             'vars': {'--text-mute': '#6A7785', '--char': '#1E2831', '--char-2': '#3A4451', '--maroon': '#1E2831', '--maroon-deep': '#141B22', '--red': '#009ADD', '--red-deep': '#0078AD',
+                      '--paper': '#F6F8FA', '--light': '#FFFFFF', '--ink': '#1F2832', '--text': '#1F2832', '--title-red': '#1F2832', '--accent': '#009ADD', '--lime': '#009ADD', '--line': '#DCE3EA', '--text-light': '#4A5663',
+                      '--sans': "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif", '--slide': "'Instrument Sans', -apple-system, sans-serif",
+                      '--foot-text': '"LBMC"'},
+             'div': {'--div-bg': '#1E2831', '--div-accent': '#009ADD'},
+             'css': [
+                 # type: titles light (400) and one size on every content slide; body regular; bold is semibold.
+                 # Four sizes in all (.75rem labels, 1rem body, 1.6rem titles, big type on cover and closing) to pass Checks
+                 '.slide .h-title { font-weight: 400; letter-spacing: -0.005em; font-style: normal; }',
+                 '.slide:not(.l-title):not(.l-section):not(.l-closing) .h-title { font-size: 1.6rem; line-height: 1.25; }',
+                 '.slide b, .slide strong { font-weight: 600; }',
+                 '.slide .eyebrow { font: 600 .75rem/1.2 var(--slide); letter-spacing: .14em; text-transform: uppercase; color: var(--red-deep); margin: 0 0 .5rem; }',
+                 # footer: the deck name on the left and the page number on the right, small and grey, no rule.
+                 # Cover, section, and closing slides go without. The logo is on the cover only
+                 '#deck { counter-reset: lbmc-page; } #deck > .slide-wrap { counter-increment: lbmc-page; }',
+                 '.slide:not(.l-title) > .logo { display: none; }',
+                 '.slide:not(.l-title):not(.l-closing):not(.l-section)::before { content: var(--foot-text); position: absolute; left: 44px; bottom: 16px; font: 400 10px/1 var(--slide); color: var(--text-mute); text-align: left; pointer-events: none; z-index: 9; }',
+                 '.slide:not(.l-title):not(.l-closing):not(.l-section)::after { content: counter(lbmc-page); position: absolute; right: 44px; bottom: 16px; font: 400 10px/1 var(--slide); color: var(--text-mute); font-variant-numeric: tabular-nums; pointer-events: none; z-index: 9; }',
+                 '.slide.dark::before, .slide.maroon::before, .slide.l-reflect::before, .slide.dark::after, .slide.maroon::after, .slide.l-reflect::after { color: #8B95A1; }',
+                 # cover: charcoal, blue eyebrow, a light white title, the line under it, then labelled facts and the presenter
+                 '.slide.l-title { background: var(--char) !important; color: #fff; padding: 3rem 3.4rem; justify-content: center; }',
+                 '.l-title .kicker { font: 600 .75rem/1.2 var(--slide); letter-spacing: .16em; text-transform: uppercase; color: var(--red); }',
+                 '.l-title .h-title { color: #fff; font-size: 2.8rem; max-width: none; margin-top: .7rem; }',
+                 '.l-title .date { margin-top: 1.1rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #C7D0D9; max-width: 62%; }',
+                 '.l-title .meta { display: grid; grid-template-columns: repeat(3, max-content); column-gap: 3.2rem; margin-top: 1.8rem; padding-top: 1.3rem; border-top: 1px solid rgba(255,255,255,.16); width: fit-content; }',
+                 '.l-title .meta small { display: block; font: 600 .75rem/1.2 var(--slide); letter-spacing: .14em; text-transform: uppercase; color: #8B95A1; margin-bottom: .45rem; }',
+                 '.l-title .meta span { display: block; font-size: 1rem; color: #fff; }',
+                 '.l-title .by { position: absolute; left: 3.4rem; bottom: 2.2rem; font-size: .75rem; color: #8B95A1; }',
+                 '.l-title .logo-plate { right: 3.4rem; bottom: 2rem; } .l-title .logo { width: 72px; }',
+                 # closing: the cover's charcoal, left-aligned, a short blue rule, then name and role
+                 '.slide.l-closing { background: var(--char) !important; align-items: flex-start; justify-content: center; text-align: left; padding: 3rem 3.4rem; }',
+                 '.l-closing .h-title { color: #fff; font-size: 2.8rem; margin: 0 0 1.4rem; }',
+                 ".l-closing .h-title::after { content: ''; display: block; width: 3.5rem; height: 2px; background: var(--red); margin-top: 1.2rem; }",
+                 '.l-closing .contacts { flex-direction: column; align-items: flex-start; gap: .35rem; font-size: 1rem; color: #C7D0D9; }',
+                 '.l-closing .contacts span:first-of-type { color: #fff; font-weight: 600; } .l-closing .contacts .sep { display: none; }',
+                 '.l-closing .site { position: absolute; left: 3.4rem; bottom: 2.2rem; margin: 0; font-size: .75rem; color: #8B95A1; }',
+                 # section dividers and question slides: charcoal, left-aligned, light type
+                 '.slide.l-section .h-title { font-weight: 400; }',
+                 '.slide.l-reflect { align-items: flex-start; text-align: left; padding: 3rem 4rem; }',
+                 '.l-reflect .q { font-weight: 400; font-size: 2.2rem; max-width: 30ch; } .l-reflect .how { font-weight: 600; font-size: .75rem; letter-spacing: .14em; color: var(--red); }',
+                 # two columns: top-aligned, small blue uppercase headings, 1rem body; cards become grey panels with a hairline
+                 '.l-twocol .cols { align-content: start; } .l-twocol .cols.one { grid-template-columns: minmax(0, 620px); justify-content: start; }',
+                 '.l-twocol .col h4, .l-twocol .cols.bigcols .col h4 { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--red-deep); margin: 0 0 .7rem; }',
+                 '.l-twocol .body-p, .l-twocol .cols.bigcols .body-p, .l-data .body-p { font-size: 1rem; line-height: 1.5; margin-bottom: .55rem; }',
+                 '.l-plain .body-p { font-size: 1rem; line-height: 1.55; } .l-plain .content { justify-content: flex-start; padding-top: .6rem; }',
+                 '.l-twocol .col.card, .l-twocol .cols.bigcols .col.card, .l-flow .step, .l-ddiag .dd-box, .l-transform .card, .l-ladder .facts, .l-card .panel, .l-breakout .card, .l-dialogue .bub { background: var(--paper); box-shadow: none !important; border: 1px solid var(--line); border-radius: 2px; padding: 1.1rem 1.3rem; }',
+                 # tables: a slim charcoal header, hairline rows, regular cells, no shadow, rounding, or zebra stripes
+                 '.l-data table, .l-pptx table.pp-table { box-shadow: none; border-radius: 0; background: transparent; font-size: 1rem; }',
+                 '.l-data table { flex: none; }',
+                 '.l-data th { background: var(--char); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; padding: .55rem 1rem; }',
+                 '.l-data td { font-weight: 400; padding: .6rem 1rem; border-bottom: 1px solid var(--line); }',
+                 '.l-data td:first-child, .l-data td.n, .l-data td.em { font-weight: 600; font-style: normal; }',
+                 '.l-data tr:nth-child(even) td, .l-pptx table.pp-table tr:nth-child(even) td { background: transparent; }',
+                 '.l-data tr:last-child td { border-bottom: 1px solid var(--line); }',
+                 '.l-data .foot { font-size: .75rem; font-style: normal; color: var(--text-light); }',
+                 # charts: the caption is a small grey label, as in the LBMC decks
+                 '.l-chart .cap { font: 600 .75rem/1.2 var(--slide); letter-spacing: .1em; text-transform: uppercase; color: var(--text-light); font-style: normal; margin: .2rem 0 .4rem; }'],
+             'pp': _pp('#009ADD', '#1E2831', '#E6F5FB', '#99D7F1', '#1E2831', '#C7D0D9', '#4A5663', '#6A7785', '#F6F8FA', '#DCE3EA')},
     'dark': {'name': 'Dark', 'accent': '#E0505A', 'dark': True,
              'vars': {'--char': '#141211', '--char-2': '#2B2726', '--maroon': '#2B2726', '--maroon-deep': '#141211', '--red': '#EC6670', '--red-deep': '#E0505A', '--accent': '#E0505A', '--lime': '#EC6670'},
              'slide': {'--paper': '#262322', '--light': '#1E1C1B', '--white': '#262322', '--ink': '#F3F0EE', '--text': '#E6E1DE', '--text-light': '#B5ADA9', '--text-mute': '#A39C98',
@@ -112,7 +176,7 @@ def theme_previews():
     return out
 
 
-def theme_css(key, serif=False, originals=False):
+def theme_css(key, serif=False, originals=False, foot=None):
     """originals: an imported deck. Its converted slides keep the "original" button (a picture of each slide as it
     was) and their own logos, so the deck's logo stays off them."""
     t = THEMES.get(key)
@@ -122,6 +186,8 @@ def theme_css(key, serif=False, originals=False):
         return '<style id="deck-theme">\n' + css[0] + '\n</style>'
     css += [f'/* Deck theme: {t["name"] if t else "engine colors"}{", serif titles" if serif else ""}. Change these to restyle the whole deck. */']
     if t:
+        if t.get('fonts'):   # the theme's typeface: @import has to come before every other rule in the block
+            css.insert(0, f"@import url('{t['fonts']}');")
         css.append(':root { ' + ' '.join(f'{k}: {v};' for k, v in t['vars'].items()) + ' }')
         if t.get('slide'):   # text and background colors that belong to the slides only, not the editor around them
             css.append('.slide, .slide-frame { ' + ' '.join(f'{k}: {v};' for k, v in t['slide'].items()) + ' }')
@@ -137,6 +203,9 @@ def theme_css(key, serif=False, originals=False):
             css.append('.slide { background: var(--light); color: var(--text); }')
             css.append('.slide .person, .slide .card, .slide .step:not(.accent), .slide table td, .slide table tr { background: #262322 !important; color: var(--text) !important; }')
             css.append('.slide .logo { filter: brightness(0) invert(1); opacity: .8; }')
+        css += t.get('css', [])
+        if t.get('footer') and foot:   # the footer line on every content slide: the deck's name
+            css.append(':root { --foot-text: ' + json.dumps(str(foot), ensure_ascii=False).replace('</', '<\\/') + '; }')
     if serif:
         css.append(f'.slide .h-title, .slide h1, .slide h2 {{ font-family: {SERIF}; font-weight: 700; letter-spacing: 0; }}')
     return '<style id="deck-theme">\n' + '\n'.join(css) + '\n</style>'
@@ -253,7 +322,7 @@ def assemble(tid, name, prefix, pieces=None, theme=None, serif=False, logo=None,
     if logo:
         head.append(f'const LOGO = {js_str(logo)}, LOGO_ALT = {js_str(name)};')
     content = '\n'.join(head) + '\n' + content
-    out = (engine.replace('/*{{CONTENT}}*/', content).replace('/*{{PITCHES}}*/', pitches).replace('<!--{{THEME}}-->', theme_css(theme, serif, originals))
+    out = (engine.replace('/*{{CONTENT}}*/', content).replace('/*{{PITCHES}}*/', pitches).replace('<!--{{THEME}}-->', theme_css(theme, serif, originals, foot=name))
            .replace('<!--{{SCRIPTS}}-->', scripts)
            .replace('{{TITLE}}', html.escape(name)).replace('{{BRAND}}', 'Strategy<span>U</span> · ' + html.escape(name))
            .replace('{{SUB}}', html.escape(t.get('sub', t['name']))).replace('{{PREFIX}}', prefix))
@@ -478,9 +547,14 @@ def create_deck(name, tid, brief=None, pieces=None, logo=None, registry_path=Non
             logo = None
     pieces = [{'id': re.sub(r'[^a-z0-9-]', '', str(pc.get('id', '')).lower()) or f'piece{i}', 'name': str(pc.get('name', '')).strip() or 'Version',
                'desc': str(pc.get('desc', '')).strip()} for i, pc in enumerate(pieces or []) if isinstance(pc, dict)]
+    import base64
+    if not source or mode == 'rebuild':   # house default: the LBMC style and logo unless the deck asks for another
+        brief.setdefault('style', 'LBMC')
+        if not logo and brief['style'] == 'LBMC':
+            f = Path(__file__).parent / 'assets' / 'lbmc-logo.jpg'
+            logo = {'data': 'data:image/jpeg;base64,' + base64.b64encode(f.read_bytes()).decode()}
     logo_raw = logo_ext = None
     if logo and logo.get('data'):   # the deck's own logo, from the form (a data URL): checked before anything is made
-        import base64
         m = re.match(r'data:image/(png|jpeg|jpg|svg\+xml|webp);base64,(.*)$', str(logo['data']), re.S)
         if not m:
             raise ValueError('The logo has to be a PNG, JPG, SVG, or WebP file.')
