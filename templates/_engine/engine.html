@@ -1710,7 +1710,7 @@ function build(id) {
   if (b.v2) s.appendChild(el('span','slide-tag v2','Version 2 — remade'));
   if (b.fac) s.appendChild(el('span','slide-tag fac','Facilitator copy — do not project'));
 
-  const eyebrowEl = () => null;   // the rendered deck has no eyebrows; titles carry the label
+  const eyebrowEl = () => b.eyebrow ? ed('div','eyebrow', b.eyebrow) : null;   // optional: a short label above the title (the LBMC look); titles still carry the point
 
   switch (b.layout) {
     case 'image': {
@@ -1832,6 +1832,8 @@ function build(id) {
       if (b.kicker) s.appendChild(ed('div','kicker', b.kicker));
       s.appendChild(ed('h1','h-title', b.title));
       s.appendChild(ed('div','date', b.date || ''));
+      if (b.meta) { const m = el('div','meta'); b.meta.forEach(([k, v]) => { const d = el('div'); d.appendChild(el('small', null, k)); d.appendChild(ed('span', null, v)); m.appendChild(d); }); s.appendChild(m); }   // optional: [label, value] pairs under the cover's line
+      if (b.by) s.appendChild(ed('div','by', b.by));
       { const plate = el('div','logo-plate'); if (b.clientLogo) { const cl = document.createElement('img'); cl.src = b.clientLogo; cl.className = 'client-logo'; cl.alt=''; plate.appendChild(cl); } plate.appendChild(logoImg()); s.appendChild(plate); }
       break;
     }
@@ -2008,6 +2010,7 @@ function build(id) {
       s.appendChild(cv); s.appendChild(logoImg()); break;
     }
     case 'chart': {
+      { const e = eyebrowEl(); if (e) s.appendChild(e); }
       s.appendChild(ed('h2','h-title', b.title));
       if (b.cap) s.appendChild(ed('div','cap', md(b.cap)));
       const W = 900, H = 330, L = 60, R = 120, T = 30, B = 40;

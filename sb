@@ -29,7 +29,7 @@
                                             a deck in a folder of your own: leaves the registry, files stay
   sb templates                              the templates a new deck can start from
   sb new "<name>" [--template id] [--audience A] [--audience-type T] [--knows K] [--use U] [--length L]
-         [--point P] [--structure S] [--density D] [--style Navy|Dark|Minimal|Forest|Teal|Plum] [--titles Serif]
+         [--point P] [--structure S] [--density D] [--style LBMC|Navy|Dark|Minimal|Forest|Teal|Plum] [--titles Serif]
          [--pieces "Main deck; CEO deck: what it is"] [--logo path.png] [--notes N]
                                             a new deck: folder, storage prefix, decks.json, git, BRIEF.md
   sb new "<name>" --from <deck.pptx|deck.pdf> [--rebuild [--style S] [--titles Serif] [--logo L]] [--notes N]
